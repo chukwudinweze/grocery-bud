@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
+const getLocalStorage = () => {
+  let list = localStorage.getItem("list");
+  if (list) {
+    return JSON.parse(localStorage.getItem("list"));
+  }
+};
 function App() {
   // default state values
   const [name, setName] = useState("");
@@ -56,6 +62,10 @@ function App() {
     setEditId(id);
     setName(specificItem.title);
   };
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(list));
+  }, [list]);
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
